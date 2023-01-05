@@ -2,9 +2,12 @@ package com.geektech.calculator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.android.material.button.MaterialButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +22,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = findViewById(R.id.text_view);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        MaterialButton button = findViewById(R.id.result_button);
+        button.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+            intent.putExtra("result",result.toString());
+            startActivity(intent);
+        });
     }
 
     public void onNumberClick(View view) {
@@ -140,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
                         textView.setText(result.toString());
                         break;
                 }
+                ((MaterialButton) findViewById(R.id.result_button)).setVisibility(View.VISIBLE);
         }
         isOperationClick = true;
     }
